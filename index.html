@@ -125,54 +125,54 @@ document.body.appendChild(heart);
 // Surprise
 const music = new Audio("music/song.mp3");
 music.loop = true;
-function startSurprise(){
+function startSurprise() {
+    music.play();
+    document.querySelector(".card").innerHTML = `
+        <h1 style="font-size: 24px; margin-bottom: 10px;">Happy Birthday My Love ❤️</h1>
 
-music.play();
-document.querySelector(".card").innerHTML=`
+        <!-- Shrunk the image from 220px to 130px to save screen real estate -->
+        <img src="Images/photo1.jpeg" style="
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid white;
+            margin: 10px auto;
+            box-shadow: 0 0 20px rgba(255,255,255,0.5);
+            display: block;
+        ">
 
-<h1>Happy Birthday My Love ❤️</h1>
+        <!-- Reduced text size and margin to create breathing room -->
+        <p style="font-size: 15px; margin-bottom: 15px; padding: 0 10px;">
+            Every day with you is my favorite day.<br>Choose one of the surprises below ❤️
+        </p>
 
-<img src="Images/photo1.jpeg"
-style="
-width:220px;
-height:220px;
-border-radius:50%;
-object-fit:cover;
-border:5px solid white;
-margin:20px;
-box-shadow:0 0 25px rgba(255,255,255,.7);
-">
+        <!-- Centered the video and adjusted the shadow for a cleaner look -->
+        <video autoplay loop muted playsinline style="
+            width: 160px;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin: 0 auto 20px auto;
+            box-shadow: 0 0 15px rgba(255,255,255,0.4);
+            display: block;
+        ">
+            <source src="birthday-video.mp4" type="video/mp4">
+        </video>
 
-<p>
-Every day with you is my favorite day.
-Choose one of the surprises below ❤️
-</p>
-
-<video autoplay loop muted playsinline style="
-width:180px;
-height:180px;
-object-fit:cover;
-border-radius:20px;
-margin:5px 0;
-box-shadow:0 0 15px rgba(255,255,255,.6);
-">
-<source src="birthday-video.mp4" type="video/mp4">
-</video>
-
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:25px;">
-
-<button onclick="showGallery()">📸 Memories</button>
-
-<button onclick="showLetter()">💌 Letter</button>
-
-<button onclick="playSong()">🎵 Song</button>
-
-<button onclick="finalSurprise()">🎁 Gift</button>
-
-</div>
-
-`;
-
+        <!-- Tightened the grid and made the buttons flex to align icons and text properly -->
+        <div style="
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 15px;
+        ">
+            <button onclick="showGallery()" style="display: flex; align-items: center; justify-content: center; gap: 6px; padding: 12px 10px; font-size: 16px;">📸 Memories</button>
+            <button onclick="showLetter()" style="display: flex; align-items: center; justify-content: center; gap: 6px; padding: 12px 10px; font-size: 16px;">💌 Letter</button>
+            <button onclick="playSong()" style="display: flex; align-items: center; justify-content: center; gap: 6px; padding: 12px 10px; font-size: 16px;">🎵 Song</button>
+            <button onclick="finalSurprise()" style="display: flex; align-items: center; justify-content: center; gap: 6px; padding: 12px 10px; font-size: 16px;">🎁 Gift</button>
+        </div>
+    `;
 }
 
  function showGallery(){
