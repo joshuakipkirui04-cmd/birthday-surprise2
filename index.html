@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Happy Birthday ❤️</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Lora:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
 * {
@@ -31,38 +32,55 @@ body {
 }
 
 .card {
-    width: 90%;
-    max-width: 500px;
-    background: rgba(255, 255, 255, .15);
-    backdrop-filter: blur(15px);
-    padding: 20px;
-    border-radius: 25px;
-    text-align: center;
-    color: white;
-    box-shadow: 0 0 40px rgba(0, 0, 0, .25);
-}
+            background: linear-gradient(145deg, #b52b65, #ed6663);
+            border: 2px solid #d4af37; /* Gold border */
+            border-radius: 15px;
+            padding: 30px;
+            width: 85%;
+            max-width: 400px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            color: white;
+            font-family: 'Lora', serif;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            margin: 0 auto;
+        }
 
-h1 {
-    font-size: 30px;
-    margin-bottom: 20px;
-}
+        .card h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 42px;
+            margin-bottom: 10px;
+            font-weight: normal;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
 
-p {
-    margin-bottom: 30px;
-    font-size: 18px;
-}
+        .card p {
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
 
-button {
-    padding: 15px 35px;
-    border: none;
-    border-radius: 40px;
-    font-size: 20px;
-    cursor: pointer;
-    background: white;
-    color: #ff2f7d;
-    transition: .3s;
-}
+        .jewel-hearts {
+            font-size: 16px;
+            letter-spacing: 3px;
+            margin-bottom: 25px;
+            color: #d4af37; /* Gold dots between hearts */
+        }
 
+        .start-btn {
+            background: #ffffff;
+            color: #b52b65;
+            border: none;
+            padding: 15px 20px;
+            font-size: 18px;
+            font-family: 'Lora', serif;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            cursor: pointer;
+            width: 100%;
+            transition: 0.3s;
+        }
 button:hover {
     transform: scale(1.08);
 }
@@ -93,12 +111,18 @@ button:hover {
 
 <body>
 
-<div class="card">
-    <h1>❤️ Happy Birthday ❤️</h1>
-    <p>To the most beautiful girl in my life.</p>
-    <button onclick="startSurprise()">Open My Birthday Surprise ❤️</button>
-</div>
-
+<div class="card" id="mainCard">
+        <h1>❤️ Happy Birthday ❤️</h1>
+        <p>To the most beautiful girl in my life.</p>
+        
+        <div class="jewel-hearts">
+            ❤️•❤️•❤️•❤️•❤️•❤️
+        </div>
+        
+        <button class="start-btn" onclick="startSurprise()">
+            Open My Birthday Surprise <br> ❤️
+        </button>
+    </div>
 <script>
 
 // Floating hearts
@@ -272,7 +296,7 @@ function showSong() {
 
             <p style="font-size: 16px; padding: 0 10px; margin-bottom: 25px; line-height: 1.6;">
                 I chose this song because I know you love it. ❤️<br><br>
-                <i>()</i>
+                <i>(I don't really know the lyrics but i know it's your favorite)</i>
             </p>
 
             <button onclick="toggleMusic()" id="musicToggleBtn" style="padding: 12px 25px; font-size: 16px; margin-bottom: 25px; background: rgba(255,255,255,0.9);">
