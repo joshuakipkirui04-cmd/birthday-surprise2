@@ -169,7 +169,7 @@ function startSurprise() {
             ">
                 <button onclick="showGallery()" style="display: flex; align-items: center; justify-content: center; gap: 6px; padding: 12px 10px; font-size: 16px;">📸 Memories</button>
                 <button onclick="showLetter()" style="display: flex; align-items: center; justify-content: center; gap: 6px; padding: 12px 10px; font-size: 16px;">💌 Letter</button>
-                <button onclick="playSong()" style="display: flex; align-items: center; justify-content: center; gap: 6px; padding: 12px 10px; font-size: 16px;">🎵 Song</button>
+                <button onclick="showSong()" style="display: flex; align-items: center; justify-content: center; gap: 6px; padding: 12px 10px; font-size: 16px;">🎵 Song</button>
                 <button onclick="finalSurprise()" style="display: flex; align-items: center; justify-content: center; gap: 6px; padding: 12px 10px; font-size: 16px;">🎁 Gift</button>
             </div>
         </div>
@@ -258,11 +258,38 @@ function showLetter() {
     `;
 }
 
-function playSong() {
+function showSong() {
+    if (window.galleryInterval) clearInterval(window.galleryInterval);
+
+    // This checks if the music is currently playing to display the correct button text
+    let buttonText = music.paused ? "▶️ Play Song" : "⏸️ Pause Song";
+
+    document.querySelector(".card").innerHTML = `
+        <div class="fade-in">
+            <h1 style="font-size: 24px; margin-bottom: 15px;">🎵 Our Song</h1>
+
+            <p style="font-size: 16px; padding: 0 10px; margin-bottom: 25px; line-height: 1.6;">
+                I chose this song because it reminds me of you. ❤️<br><br>
+                <i>(Optional: You can replace this text with a few lines of your favorite lyrics from the song here)</i>
+            </p>
+
+            <button onclick="toggleMusic()" id="musicToggleBtn" style="padding: 12px 25px; font-size: 16px; margin-bottom: 25px; background: rgba(255,255,255,0.9);">
+                ${buttonText}
+            </button>
+            <br>
+            <button onclick="startSurprise()" style="padding: 12px 25px; font-size: 16px;">🏠 Back</button>
+        </div>
+    `;
+}
+
+function toggleMusic() {
+    let btn = document.getElementById("musicToggleBtn");
     if (music.paused) {
         music.play();
+        btn.innerHTML = "⏸️ Pause Song";
     } else {
         music.pause();
+        btn.innerHTML = "▶️ Play Song";
     }
 }
 
