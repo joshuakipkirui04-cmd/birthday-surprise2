@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday ❤️</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    background:linear-gradient(-45deg,#ff4e8b,#ff8ac5,#9c6bff,#5d9fff);
+    background-size:400% 400%;
+    animation:bg 12s ease infinite;
+}
+
+@keyframes bg{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
+
+.card{
+    width:90%;
+    max-width:500px;
+    background:rgba(255,255,255,.15);
+    backdrop-filter:blur(15px);
+    padding:40px;
+    border-radius:25px;
+    text-align:center;
+    color:white;
+    box-shadow:0 0 40px rgba(0,0,0,.25);
+}
+
+h1{
+    font-size:40px;
+    margin-bottom:20px;
+}
+
+p{
+    margin-bottom:30px;
+    font-size:18px;
+}
+
+button{
+    padding:15px 35px;
+    border:none;
+    border-radius:40px;
+    font-size:20px;
+    cursor:pointer;
+    background:white;
+    color:#ff2f7d;
+    transition:.3s;
+}
+
+button:hover{
+    transform:scale(1.08);
+}
+
+.heart{
+    position:absolute;
+    color:white;
+    animation:float 10s linear infinite;
+    opacity:.8;
+}
+
+@keyframes float{
+from{
+transform:translateY(100vh);
+}
+to{
+transform:translateY(-120px);
+}
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+<h1>❤️ Happy Birthday ❤️</h1>
+
+<p>To the most beautiful girl in my life.</p>
+
+<button onclick="startSurprise()">
+Open My Birthday Surprise ❤️
+</button>
+
+</div>
+
+<script>
+
+// Floating hearts
+for(let i=0;i<40;i++){
+
+let heart=document.createElement("div");
+
+heart.innerHTML="❤";
+
+heart.className="heart";
+
+heart.style.left=Math.random()*100+"%";
+
+heart.style.fontSize=(20+Math.random()*30)+"px";
+
+heart.style.animationDuration=(5+Math.random()*8)+"s";
+
+heart.style.animationDelay=Math.random()*5+"s";
+
+document.body.appendChild(heart);
+
+}
+
+// Surprise
+const music = new Audio("music/song.mp3");
+music.loop = true;
+function startSurprise(){
+
+music.play();
+document.querySelector(".card").innerHTML=`
+
+<h1>Happy Birthday My Love ❤️</h1>
+
+<img src="Images/photo1.jpeg"
+style="
+width:220px;
+height:220px;
+border-radius:50%;
+object-fit:cover;
+border:5px solid white;
+margin:20px;
+box-shadow:0 0 25px rgba(255,255,255,.7);
+">
+
+<p>
+Every day with you is my favorite day.
+Choose one of the surprises below ❤️
+</p>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:25px;">
+
+<button onclick="showGallery()">📸 Memories</button>
+
+<button onclick="showLetter()">💌 Letter</button>
+
+<button onclick="playSong()">🎵 Song</button>
+
+<button onclick="finalSurprise()">🎁 Gift</button>
+
+</div>
+
+`;
+
+}
+
+ function showGallery(){
+
+let photos=[
+"Images/photo1.jpeg",
+"Images/photo2.jpeg",
+"Images/photo3.jpeg",
+"Images/photo4.jpeg"
+];
+
+let current=0;
+
+document.querySelector(".card").innerHTML=`
+
+<h1>📸 Our Memories ❤️</h1>
+
+<img id="galleryImage"
+src="${photos[0]}"
+style="
+width:280px;
+height:350px;
+object-fit:cover;
+border-radius:20px;
+border:5px solid white;
+box-shadow:0 0 25px rgba(255,255,255,.6);
+margin:20px 0;
+transition:opacity .3s ease;
+">
+
+<div style="display:flex;justify-content:center;gap:15px;">
+<button onclick="previousPhoto()">⬅️</button>
+<button onclick="nextPhoto()">➡️</button>
+</div>
+
+<br>
+
+<button onclick="startSurprise()">🏠 Home</button>
+
+`;
+
+window.photos=photos;
+window.current=current;
+
+window.galleryInterval = setInterval(() => {
+
+    if (window.current < window.photos.length - 1) {
+        window.current++;
+    } else {
+        window.current = 0;
+    }
+
+    let img = document.getElementById("galleryImage");
+
+    if (img) {
+        img.style.opacity = "0";
+
+        setTimeout(() => {
+            img.src = window.photos[window.current];
+            img.style.opacity = "1";
+        }, 300);
+    }
+
+}, 4000);
+
+}
+
+function previousPhoto(){
+
+if(window.current>0){
+
+window.current--;
+
+let img=document.getElementById("galleryImage");
+
+img.style.opacity="0";
+
+setTimeout(()=>{
+img.src=window.photos[window.current];
+img.style.opacity="1";
+},300);
+
+}
+
+}
+
+function nextPhoto(){
+
+if(window.current<window.photos.length-1){
+
+window.current++;
+
+let img=document.getElementById("galleryImage");
+
+img.style.opacity="0";
+
+setTimeout(()=>{
+img.src=window.photos[window.current];
+img.style.opacity="1";
+},300);
+
+}
+
+}
+
+function showLetter(){
+
+document.querySelector(".card").innerHTML=`
+
+<h1>💌 My Letter</h1>
+
+<p style="line-height:1.8;font-size:18px;">
+Happy Birthday, my love ❤️<br><br>
+
+I thank God every day for bringing you into my life. Even though miles separate us, you are always in my heart. You make my days brighter, my smile bigger, and my future more beautiful.<br><br>
+
+I can't wait until the day I can celebrate your birthday beside you. Until then, know that you are deeply loved, appreciated, and cherished.<br><br>
+
+Happy Birthday, beautiful. ❤️
+
+</p>
+
+<button onclick="startSurprise()">🏠 Home</button>
+
+`;
+
+}
+
+function playSong(){
+
+window.open("music/song.mp3");
+
+}
+
+function finalSurprise(){
+
+document.querySelector(".card").innerHTML=`
+
+<h1>🎁 One More Thing...</h1>
+
+<h2 style="margin:25px 0;">I Love You So Much ❤️</h2>
+
+<p>
+Distance may keep us apart today, but nothing can stop how much I love you.
+Happy Birthday, my beautiful girl.
+</p>
+
+<button onclick="startSurprise()">🏠 Home</button>
+
+`;
+
+}
+</script>
+
+</body>
+</html>
