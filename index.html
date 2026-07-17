@@ -141,6 +141,7 @@ button:hover {
     </div>
 
 <script>
+// Floating hearts
 for(let i=0; i<40; i++){
     let heart = document.createElement("div");
     heart.innerHTML = "❤";
@@ -152,8 +153,14 @@ for(let i=0; i<40; i++){
     document.body.appendChild(heart);
 }
 
+// Global Variables
 const music = new Audio("music_song (2).mp3");
 music.loop = true;
+
+// NEW: Variables to track audio state
+window.surpriseStarted = false;
+window.isManuallyPaused = false;
+
 window.photos = [
     "Images/photo1.jpeg",
     "Images/photo2.jpeg",
@@ -162,59 +169,77 @@ window.photos = [
 ];
 window.current = 0;
 
+// NEW: Automatically pause music when tab is hidden, resume when visible
+document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+        music.pause();
+    } else {
+        if (window.surpriseStarted && !window.isManuallyPaused) {
+            music.play().catch(err => console.log("Playback resume failed:", err));
+        }
+    }
+});
+
 function startSurprise() {
+    window.surpriseStarted = true; // NEW: Marks that the card is open
+    
     if (window.galleryInterval) clearInterval(window.galleryInterval);
     
     if (music.paused) music.play();
     
-    document.querySelector(".card") ? document.querySelector(".card").remove() : null;
+    if (document.querySelector(".card")) {
+        document.querySelector(".card").remove();
+    }
     
-    document.body.innerHTML += `
-        <div class="card fade-in" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 20;">
-            <h1 style="font-size: 24px; margin-bottom: 10px;">Happy Birthday My Love ❤️</h1>
+    let surpriseCard = document.createElement("div");
+    surpriseCard.className = "card fade-in";
+    surpriseCard.style.cssText = "position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 20;";
+    
+    surpriseCard.innerHTML = `
+        <h1 style="font-size: 24px; margin-bottom: 10px;">Happy Birthday My Love ❤️</h1>
 
-            <img src="Images/photo1.jpeg" style="
-                width: 130px;
-                height: 130px;
-                border-radius: 50%;
-                object-fit: cover;
-                border: 4px solid white;
-                margin: 10px auto;
-                box-shadow: 0 0 20px rgba(255,255,255,0.5);
-                display: block;
-            ">
+        <img src="Images/photo1.jpeg" style="
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid white;
+            margin: 10px auto;
+            box-shadow: 0 0 20px rgba(255,255,255,0.5);
+            display: block;
+        ">
 
-            <p style="font-size: 15px; margin-bottom: 15px; padding: 0 10px;">
-                Every day with you is my favorite day.<br>Choose one of the surprises below ❤️
-            </p>
+        <p style="font-size: 15px; margin-bottom: 15px; padding: 0 10px;">
+            Every day with you is my favorite day.<br>Choose one of the surprises below ❤️
+        </p>
 
-            <video preload="metadata" autoplay loop muted playsinline style="
-                width: 220px;
-                height: 280px;
-                object-fit: cover;
-                object-position: top;
-                border-radius: 15px;
-                margin: 0 auto 20px auto;
-                box-shadow: 0 0 15px rgba(255,255,255,0.4);
-                display: block;
-            ">
-                <source src="birthday-video.mp4" type="video/mp4">
-            </video>
+        <video preload="metadata" autoplay loop muted playsinline style="
+            width: 220px;
+            height: 280px;
+            object-fit: cover;
+            object-position: top;
+            border-radius: 15px;
+            margin: 0 auto 20px auto;
+            box-shadow: 0 0 15px rgba(255,255,255,0.4);
+            display: block;
+        ">
+            <source src="birthday-video.mp4" type="video/mp4">
+        </video>
 
-            <div style="
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 12px;
-                margin-top: 15px;
-            ">
-                <button onclick="showGallery()" style="display: flex; align-items: center; justify-content: center; gap: 6px; padding: 12px 10px; font-size: 16px;">📸 Memories</button>
-                <button onclick="showLetter()" style="display: flex; align-items: center; justify-content: center; gap: 6px; padding: 12px 10px; font-size: 16px;">💌 Letter</button>
-                <button onclick="showSong()" style="display: flex; align-items: center; justify-content: center; gap: 6px; padding: 12px 10px; font-size: 16px;">🎵 Song</button>
-                <button onclick="finalSurprise()" style="display: flex; align-items: center; justify-content: center; gap: 6px; padding: 12px 10px; font-size: 16px;">🎁 Gift</button>
-            </div>
+        <div style="
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 15px;
+        ">
+            <button onclick="showGallery()" style="display: flex; align-items: center; justify-content: center; gap: 6px; padding: 12px 10px; font-size: 16px;">📸 Memories</button>
+            <button onclick="showLetter()" style="display: flex; align-items: center; justify-content: center; gap: 6px; padding: 12px 10px; font-size: 16px;">💌 Letter</button>
+            <button onclick="showSong()" style="display: flex; align-items: center; justify-content: center; gap: 6px; padding: 12px 10px; font-size: 16px;">🎵 Song</button>
+            <button onclick="finalSurprise()" style="display: flex; align-items: center; justify-content: center; gap: 6px; padding: 12px 10px; font-size: 16px;">🎁 Gift</button>
         </div>
     `;
     
+    document.body.appendChild(surpriseCard);
     document.getElementById("mainCard").style.display = "none";
 }
 
@@ -324,13 +349,16 @@ function showSong() {
     `;
 }
 
+// NEW: Records if she manually paused the song
 function toggleMusic() {
     let btn = document.getElementById("musicToggleBtn");
     if (music.paused) {
         music.play();
+        window.isManuallyPaused = false; 
         btn.innerHTML = "⏸️ Pause Song";
     } else {
         music.pause();
+        window.isManuallyPaused = true; 
         btn.innerHTML = "▶️ Play Song";
     }
 }
